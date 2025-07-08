@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -28,11 +29,17 @@ def main():
   while running:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
-          running = False
+        sys.exit()
+
+    screen.fill((0, 0, 0))
 
     updatable.update(dt)
 
-    screen.fill((0, 0, 0))
+    for asteroid in asteroids:
+      if asteroid.collide_with(player):
+        print("Player hit by asteroid!")
+        print("Game over!")
+        running = False
 
     for obj in drawable:
       obj.draw(screen)
